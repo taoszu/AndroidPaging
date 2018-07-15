@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">AndroidPaging</string>
+
+    <string name="db_data_page_render_time_format">渲染时间为%s毫秒</string>
+    <string name="db_data_page_add_success_tip">添加数据库数据成功</string>
 </resources>
