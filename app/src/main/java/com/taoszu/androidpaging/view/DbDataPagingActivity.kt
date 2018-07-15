@@ -23,7 +23,7 @@ import com.taoszu.androidpaging.ioThread
 import kotlinx.android.synthetic.main.act_db_data_paging.*
 
 class DbDataPagingActivity : AppCompatActivity(), View.OnClickListener {
-    var postList: LiveData<PagedList<ArticleEntity>> ? = null
+    var postList: LiveData<PagedList<ArticleEntity>>? = null
     lateinit var dataBase: ArticleDatabase
 
     val pageAdapter = ArticlePageAdapter()
@@ -42,7 +42,7 @@ class DbDataPagingActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        when(v?.id) {
+        when (v?.id) {
             R.id.btn_save -> {
                 val articleDao = dataBase.articleDao()
                 ioThread {
@@ -55,20 +55,10 @@ class DbDataPagingActivity : AppCompatActivity(), View.OnClickListener {
             R.id.btn_page_show -> {
                 recycle_article.adapter = pageAdapter
                 val articleDao = dataBase.articleDao()
-                val pagedListConfig = PagedList.Config.Builder().setEnablePlaceholders(true).setPageSize(5).build()
+                val pagedListConfig = PagedList.Config.Builder().setEnablePlaceholders(true).setPageSize(10).setInitialLoadSizeHint(20).build()
                 postList = LivePagedListBuilder(articleDao.getAllByDataSource(), pagedListConfig).build()
                 postList!!.observe(this, Observer {
-                    val startTime = System.currentTimeMillis()
                     pageAdapter.submitList(it)
-                    value_render_time.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-                        override fun onGlobalLayout() {
-                            val endTime = System.currentTimeMillis()
-                            val time = endTime - startTime
-                            value_render_time.text = getString(R.string.db_data_page_render_time_format, time.toString())
-                            value_render_time.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                        }
-                    })
-                    value_render_time.text = "-"
                 })
             }
             R.id.btn_all_show -> {
@@ -77,29 +67,12 @@ class DbDataPagingActivity : AppCompatActivity(), View.OnClickListener {
                 ioThread {
                     allAdapter.dataList = articleDao.getAll()
                     runOnUiThread {
-                        val startTime = System.currentTimeMillis()
                         allAdapter.notifyDataSetChanged()
-                        value_render_time.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-                            override fun onGlobalLayout() {
-                                val endTime = System.currentTimeMillis()
-                                val time = endTime - startTime
-                                Log.e("addTime", time.toString())
-                                value_render_time.text = getString(R.string.db_data_page_render_time_format, time.toString())
-                                value_render_time.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                            }
-                        })
-                        value_render_time.viewTreeObserver.addOnDrawListener {
-                            val endTime = System.currentTimeMillis()
-                            val time = endTime - startTime
-                            Log.e("endTime", time.toString())
-                        }
-                        value_render_time.text = "-"
                     }
                 }
             }
         }
     }
-
 
 
 }
