@@ -8,11 +8,7 @@ import android.arch.persistence.room.Room
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
 import android.view.View
-import android.view.ViewTreeObserver
 import android.widget.Toast
 import com.taoszu.androidpaging.ArticleAllAdapter
 import com.taoszu.androidpaging.ArticlePageAdapter

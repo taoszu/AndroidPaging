@@ -21,14 +21,15 @@ class LocalDataSourceFactory:DataSource.Factory<Int, ArticleEntity>() {
             private fun loadRangeInternal(startPosition: Int, loadCount: Int): List<ArticleEntity> {
                 val articleList = mutableListOf<ArticleEntity>()
                 val authorPrefix = "作者"
-                val titlePrefix = "标题"
+                val titlePrefix = "我是一个标题"
+                val typePrefix = "类别"
                 val timeStampBase = 1531548138000L
                 for (i in 0 until loadCount) {
                     var articleEntity = ArticleEntity()
-                    val id = i + startPosition
-                    articleEntity.id = id.toString()
+                    articleEntity.id = (startPosition + i).toString()
                     articleEntity.author = "$authorPrefix ${articleEntity.id}"
                     articleEntity.title = "$titlePrefix ${articleEntity.id}"
+                    articleEntity.type = "$typePrefix ${articleEntity.id}"
                     articleEntity.timeStamp = timeStampBase + i * 1000L
                     articleList.add(articleEntity)
                 }

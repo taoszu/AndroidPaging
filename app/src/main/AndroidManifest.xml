@@ -20,6 +20,10 @@
         <activity android:name=".view.DbDataPagingActivity">
         </activity>
 
+        <activity android:name=".view.LocalDataPagingActivity">
+        </activity>
+
+
     </application>
 
 </manifest>

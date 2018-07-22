@@ -20,5 +20,9 @@ class MainActivity:AppCompatActivity() {
             startActivity(Intent(this, DbDataPagingActivity::class.java))
         }
 
+        btn_local_data.setOnClickListener {
+            startActivity(Intent(this, LocalDataPagingActivity::class.java))
+        }
+
     }
 }
